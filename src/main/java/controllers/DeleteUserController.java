@@ -16,7 +16,6 @@ public class DeleteUserController {
         if (user != null) {
             name = user.getFirstName();
         }
-        System.out.println(id);
         if (user != null && user.getToken().equals(ctx.cookie("token"))) {
             UserDao.deleteUser(id);
             SessionUserController.sessionDestroyUser(ctx);

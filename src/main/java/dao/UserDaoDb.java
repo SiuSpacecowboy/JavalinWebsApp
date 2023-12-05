@@ -60,7 +60,6 @@ public class UserDaoDb implements UserDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(ID);
         return ++ID;
     }
 
@@ -120,7 +119,6 @@ public class UserDaoDb implements UserDao{
     }
 
     public void deleteUser(Long id) {
-        User user = findUserById(id);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = ?");
             preparedStatement.setLong(1, id);

@@ -35,7 +35,7 @@ public class CreateUserController {
             password = Secure.encrypt(password);
             String token = Secure.generateToken();
             User user = new User(firstName, lastName, email, password, token);
-            Long id = UserDao.save(user);
+            UserDao.save(user);
             ctx.sessionAttribute("flash","Creation success");
             ctx.cookie("token", token);
             ctx.redirect(NameRoutes.startPath());
