@@ -38,7 +38,6 @@ public class CreateUserController {
             Long id = UserDao.save(user);
             ctx.sessionAttribute("flash","Creation success");
             ctx.cookie("token", token);
-           /* ctx.redirect(NameRoutes.oneUserPath(String.valueOf(id)));*/
             ctx.redirect(NameRoutes.startPath());
         } catch (ValidationException e) {
             UserPageWithErrors errors = new UserPageWithErrors(firstName, lastName, email, e.getErrors());

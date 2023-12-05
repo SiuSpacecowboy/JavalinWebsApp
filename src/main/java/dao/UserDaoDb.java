@@ -1,5 +1,7 @@
 package dao;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import dto.User;
 
 import java.sql.*;
@@ -9,12 +11,14 @@ import java.util.List;
 public class UserDaoDb implements UserDao{
 
     private static Long ID = 0L;
+    private static final HikariConfig config = new HikariConfig();
+    private static HikariDataSource ds;
     private static final String URL = "jdbc:mysql://localhost:3306/app";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "password";
     private static Connection connection;
 
-    static {
+  /*  static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -22,6 +26,21 @@ public class UserDaoDb implements UserDao{
         }
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    static {
+        config.setJdbcUrl(URL);
+        config.setUsername(USERNAME);
+        config.setPassword(PASSWORD);
+        config.addDataSourceProperty( "cachePrepStmts" , "true" );
+        config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
+        config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
+        ds = new HikariDataSource(config);
+        try {
+            connection = ds.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
